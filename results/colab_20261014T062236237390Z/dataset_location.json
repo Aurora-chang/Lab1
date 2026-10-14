@@ -1,0 +1,5 @@
+{
+  "handle": "paultimothymooney/chest-xray-pneumonia",
+  "download_directory": "/kaggle/input/chest-xray-pneumonia",
+  "dataset_root": "/kaggle/input/chest-xray-pneumonia/chest_xray"
+}

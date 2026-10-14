@@ -1,0 +1,19 @@
+{
+  "dataset": "/kaggle/input/chest-xray-pneumonia/chest_xray",
+  "model": "resnet18",
+  "epochs": 20,
+  "batch_size": 32,
+  "lr": 0.0001,
+  "weight_decay": 0.0001,
+  "size": 224,
+  "workers": 2,
+  "seed": 42,
+  "val_fraction": 0.2,
+  "official_val": false,
+  "no_pretrained": false,
+  "no_augmentation": false,
+  "device": "cuda",
+  "output": "/content/drive/MyDrive/Lab1/runs/20261014T062236237390Z",
+  "torch_version": "2.11.0+cu130",
+  "torchvision_version": "0.26.0+cu130"
+}
