@@ -1,4 +1,3 @@
-"""Train one ResNet, select on validation F1, then evaluate test once."""
 import argparse
 import csv
 import json
@@ -30,7 +29,7 @@ def run_epoch(model, loader, device, criterion=None, optimizer=None):
                 optimizer.zero_grad(set_to_none=True)
             logits = model(images)
             if criterion is not None:
-                # Sum reduction / image count gives exact dataset-level weighted loss.
+
                 summed_loss = criterion(logits, labels)
                 loss_sum += summed_loss.item()
                 if training:
@@ -73,7 +72,7 @@ def parse_args():
 def main():
     args = parse_args()
     output = args.output / args.model
-    # Keep runs separate to prevent accidentally mixing curves and checkpoints.
+
     output.mkdir(parents=True, exist_ok=True)
     if any(output.iterdir()):
         raise FileExistsError(f"{output} is not empty; use a new --output directory")
@@ -88,7 +87,7 @@ def main():
     loaders, samples = build_loaders(
         args.dataset, args.batch_size, args.size, args.workers, args.seed,
         args.val_fraction, args.official_val, not args.no_augmentation)
-    # Avoid a singleton final training batch (ResNet BatchNorm at small input sizes).
+
     if len(samples["train"]) % args.batch_size == 1:
         raise ValueError("Training leaves a singleton batch; choose another batch size")
     config = {key: str(value) if isinstance(value, Path) else value for key, value in vars(args).items()}

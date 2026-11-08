@@ -34,15 +34,15 @@ def measurement(outputs, labels, smooth=1e-10):
     return tp, tn, fp, fn
 
 def plot_accuracy(train_acc_list, test_acc_list):
-    # TODO plot training and testing accuracy curve
+
     pass
 
 def plot_f1_score(f1_score_list):
-    # TODO plot testing f1 score curve
+
     pass
 
 def plot_confusion_matrix(confusion_matrix):
-    # TODO plot confusion matrix
+
     pass
 
 def train(device, train_loader, model, criterion, optimizer):
@@ -58,7 +58,7 @@ def train(device, train_loader, model, criterion, optimizer):
         with torch.set_grad_enabled(True):
             avg_loss = 0.0
             train_acc = 0.0
-            tp, tn, fp, fn = 0, 0, 0, 0     
+            tp, tn, fp, fn = 0, 0, 0, 0
             for _, data in enumerate(tqdm(train_loader)):
                 inputs, labels = data
                 inputs = inputs.to(device)
@@ -76,7 +76,7 @@ def train(device, train_loader, model, criterion, optimizer):
                 tp += sub_tp
                 tn += sub_tn
                 fp += sub_fp
-                fn += sub_fn          
+                fn += sub_fn
 
             avg_loss /= len(train_loader.dataset)
             train_acc = (tp+tn) / (tp+tn+fp+fn) * 100
@@ -84,8 +84,8 @@ def train(device, train_loader, model, criterion, optimizer):
             print(f'↳ Loss: {avg_loss}')
             print(f'↳ Training Acc.(%): {train_acc:.2f}%')
 
-        # write validation if you needed
-        # val_acc, f1_score, c_matrix = test(val_loader, model)
+
+
 
         train_acc_list.append(train_acc)
         f1_score_list.append(f1_score)
@@ -100,7 +100,7 @@ def test(test_loader, model):
     with torch.set_grad_enabled(False):
         model.eval()
         for images, labels in test_loader:
-            
+
             images = images.to(device)
             labels = labels.to(device)
             outputs = model(images)
@@ -114,7 +114,7 @@ def test(test_loader, model):
 
         c_matrix = [[int(tp), int(fn)],
                     [int(fp), int(tn)]]
-        
+
         val_acc = (tp+tn) / (tp+tn+fp+fn) * 100
         recall = tp / (tp+fn)
         precision = tp / (tp+fp)
@@ -130,30 +130,30 @@ if __name__ == '__main__':
 
     parser = ArgumentParser()
 
-    # for model
+
     parser.add_argument('--num_classes', type=int, required=False, default=2)
 
-    # for training
+
     parser.add_argument('--num_epochs', type=int, required=False, default=30)
     parser.add_argument('--batch_size', type=int, required=False, default=128)
     parser.add_argument('--lr', type=float, default=1e-5)
     parser.add_argument('--wd', type=float, default=0.9)
 
-    # for dataloader
+
     parser.add_argument('--dataset', type=str, required=False, default='chest_xray')
 
-    # for data augmentation
+
     parser.add_argument('--degree', type=int, default=90)
     parser.add_argument('--resize', type=int, default=224)
 
     args = parser.parse_args()
 
-    # set gpu
+
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print(f'## Now using {device} as calculating device ##')
 
-    # set dataloader (Train and Test dataset, write your own validation dataloader if needed.)
-    # TODO / Change the data augmentation method yourself 
+
+
     train_dataset = ImageFolder(root=os.path.join(args.dataset, 'train'),
                                 transform = transforms.Compose([transforms.Resize((args.resize, args.resize)),
                                                                 transforms.RandomRotation(args.degree, resample=False),
@@ -166,22 +166,22 @@ if __name__ == '__main__':
     train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True)
     test_loader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False)
 
-    # TODO / define model 
+
     model = ... <- refine by yourself
 
     model = model.to(device)
 
-    # define loss function, optimizer
+
     criterion = nn.CrossEntropyLoss(weight=torch.FloatTensor([3.8896346, 1.346]))
     criterion = criterion.to(device)
     optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.wd)
 
-    # training
+
     train_acc_list, f1_score_list, best_c_matrix = train(device, train_loader, model, criterion, optimizer)
-    # testing
+
     test_acc, f1_score, best_c_matrix = test(test_loader, model)
 
-    # plot
+
     plot_accuracy(train_acc_list, test_acc_list)
     plot_f1_score(f1_score_list)
     plot_confusion_matrix(best_c_matrix)

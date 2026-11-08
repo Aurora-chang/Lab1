@@ -1,4 +1,3 @@
-"""Download the assignment dataset from Kaggle and locate its split root."""
 import argparse
 import json
 from pathlib import Path
@@ -15,7 +14,7 @@ def find_dataset_root(download_directory):
         (path / split / name).is_dir() for split in ("train", "test") for name in CLASSES)]
     if not valid:
         raise FileNotFoundError(f"Could not find train/test with NORMAL/PNEUMONIA under {directory}")
-    # Some Kaggle archive versions include duplicate nested copies; use one root.
+
     return sorted(valid, key=lambda path: (len(path.parts), str(path)))[0]
 
 

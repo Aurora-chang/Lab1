@@ -1,4 +1,3 @@
-"""Predict one image, or evaluate an entire labeled test split."""
 import argparse
 import json
 from pathlib import Path

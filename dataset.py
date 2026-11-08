@@ -1,4 +1,3 @@
-"""Custom dataset and loaders. NORMAL=0, PNEUMONIA=1."""
 from pathlib import Path
 import random
 
@@ -65,7 +64,7 @@ def build_loaders(root, batch_size, size, workers, seed, val_fraction=0.2,
     else:
         if not 0 < val_fraction < 1:
             raise ValueError("val_fraction must be between 0 and 1")
-        # Stratify using training data only; test images never enter validation.
+
         rng = random.Random(seed)
         train_parts, val_samples = [], []
         for label in range(2):

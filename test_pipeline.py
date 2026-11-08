@@ -1,4 +1,3 @@
-"""Offline synthetic checks; these are software tests, not lab experiments."""
 import json
 from pathlib import Path
 import subprocess

@@ -1,4 +1,3 @@
-"""Create model comparison figures from completed runs."""
 import argparse
 import csv
 import json

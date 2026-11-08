@@ -10,7 +10,7 @@ def build_model(name, pretrained=True):
     }
     builder, weights = builders[name]
     model = builder(weights=weights if pretrained else None)
-    # Initialize a new binary classifier, as required by the lab.
+
     model.fc = nn.Linear(model.fc.in_features, 2)
     return model
 

@@ -1,6 +1,3 @@
-"""Confusion matrix: rows=true class, columns=predicted class."""
-
-
 def classification_metrics(matrix):
     tn, fp = matrix[0]
     fn, tp = matrix[1]

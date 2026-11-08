@@ -1,4 +1,3 @@
-"""Build the source upload archive for Lab1_Colab.ipynb."""
 from pathlib import Path
 from zipfile import ZipFile, ZIP_DEFLATED
 
